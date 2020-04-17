@@ -1,0 +1,38 @@
+Splunk All The Things!!
+
+This app was created with the intention of allowing users the ability to check on their own permissions/capabilities and what apps and indexes they have access to, as well as all available indexes and what roles are required to search them.
+
+What you need to do to set this app up:
+
+#####LOOKUPS#####
+lookups/index_descriptions.csv
+	◦ This lookup includes all of the indexes available to search as well as a brief description. 
+	◦ To grab a list of all indexes, run the saved search: index_information. See SAVED SEARCHES for more information.
+	◦ It is best practice to update the lookup table every time a new index is created
+		There could be an alert in place when an index exists that is not in this lookup (future enhancement)
+
+
+#####EVENTTYPES#####
+default/eventtypes.conf
+	◦ This is not needed for the functionality of the dashboards, however it can be helpful when searching data.
+	◦ These eventtypes are various teams/groups/etc. that own various hosts. The purpose of them is so that users can more easily find data owners/subject matter experts. 
+	◦ The reason for using eventtypes is so that it can be a search string when there are multiple hosts belonging to one group. If there is only one host, it can be defined in tags.conf
+	◦ There is an example in eventtypes.conf of the format.
+
+
+#####TAGS#####
+default/tags.conf
+	◦ This is not needed for the functionality of the dashboards, however it can be helpful when searching data.
+	◦ These tags include the data owner department and email addresses for the various hosts identified in eventtypes.conf
+	◦ As stated in the eventtypes.conf section, if there is only one host and eventtypes aren't needed, it can all be defined solely in tags.conf
+	◦ There are examples of both formats in tags.conf
+
+
+What else to know?
+#####SAVED SEARCHES#####
+default/savedsearches.conf
+	◦ index_information
+		◦ This saved search creates a lookup called index_information.csv
+		◦ You may need to edit the search to include/exclude specific splunk_servers as necessary, to fit your environments needs
+		◦ This lookup is used in the Index Overview dashboard
+		◦ This search is scheduled to run once a day

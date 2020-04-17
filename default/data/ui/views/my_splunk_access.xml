@@ -1,0 +1,61 @@
+<dashboard>
+  <label>My Splunk Access</label>
+  <search id="base_auth">
+    <query>| rest /services/authorization/roles splunk_server=local f=capabilities f=title |join title [| rest /services/authentication/current-context splunk_server=local f=roles|table roles|mvexpand roles|rename roles as title]</query>
+  </search>
+  <row>
+    <panel>
+      <table>
+        <title>My App Access</title>
+        <search>
+          <query>| rest /services/apps/local splunk_server=local search="visible=1" f=title f=label f=Permission f=eai*
+          | search title!=launcher title!=appsbrowser|rename title as Title label as Label eai:acl.can_write AS Permission  |table Title Label Permission
+          | eval Permission=if(Permission == 1, "Read and Write", "Read only")</query>
+        </search>
+        <option name="count">25</option>
+        <drilldown>
+          <set token="app">$row.Title$</set>
+          <link target="_blank">/app/$app$/</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>User Capabilities</title>
+        <search base="base_auth">
+          <query>| stats values(capabilities) as Capabilities| mvexpand Capabilities</query>
+        </search>
+        <option name="count">25</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Roles</title>
+        <search base="base_auth">
+          <query>| table title | rename title as Roles</query>
+        </search>
+        <option name="count">25</option>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Index Access</title>
+        <search>
+          <query>| rest /servicesNS/-/-/data/indexes splunk_server=local f=title|table title|rename title as Indexes</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+        </search>
+        <option name="count">25</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <set token="index">$row.Indexes$</set>
+          <link target="_blank">search?q=index=$index$&amp;earliest=-30m@m&amp;latest=now</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</dashboard>

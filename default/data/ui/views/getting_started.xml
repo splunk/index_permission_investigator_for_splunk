@@ -1,0 +1,82 @@
+<dashboard>
+  <label>Getting Started</label>
+  <description>References to learn more about how to use the product</description>
+  <row>
+    <panel>
+      <html>
+        <h1>Splunk Documentation</h1>
+        Splunk Documentation is one of the best places to learn how to do almost anything in Splunk. <br/>
+        Many times you can search within the documentation website or you can search in Google to find the docs you are looking for.<br/>
+        If you use Community Slack, you can also use some very helpful SlackBot commands to find documentation <br/>
+        Make sure you mark down if the documentation was helpful and any feedback you might have on the bottom of the page, our docs team loves it! <br/>
+        The <b>
+          <a href="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/WhatsInThisManual" target="_blank">Search Reference Manual</a>
+        </b> is a great starting point to learn SPL!
+      </html>
+    </panel>
+    <panel>
+      <html>
+        <h1>Splunk Answers and Community Slack</h1>
+        The Splunk Community is incredibly supportive and helpful - pick their brains!<br/>
+        As an internal Splunker, you should already be able to login to <b>
+          <a href="https://splunk-usergroups.slack.com/" target="_blank">Community Slack</a>
+        </b>
+        <br/>
+        There are SO MANY channels available, so make sure you find the topics you're interested in and join in the conversation!<br/>
+        <b>
+          <a href="https://answers.splunk.com/" target="_blank">Splunk Answers</a>
+        </b> uses your Splunk credentials, as well!<br/>
+        If you have the answer to a question on there, don't be shy! Don't be shy to also ask questions.
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <h1>Splunk All The Things!!</h1>
+
+        This app was created with the intention of allowing users the ability to check on their own permissions/capabilities and what apps and indexes they have access to, as well as all available indexes and what roles are required to search them.<br/>
+        <br/>
+        What you need to do to set this app up:
+        <br/>
+        <b>#####LOOKUPS#####</b>
+        <br/>
+        <b>lookups/index_descriptions.csv</b><br/>
+          ◦ This lookup includes all of the indexes available to search as well as a brief description. <br/>
+          ◦ To grab a list of all indexes, run the saved search: index_information. See SAVED SEARCHES for more information. <br/>
+          ◦ It is best practice to update the lookup table every time a new index is created<br/>
+            There could be an alert in place when an index exists that is not in this lookup (future enhancement)<br/>
+        <br/>
+
+        <b>#####EVENTTYPES#####</b>
+        <br/>
+        <b>default/eventtypes.conf</b><br/>
+          ◦ This is not needed for the functionality of the dashboards, however it can be helpful when searching data.<br/>
+          ◦ These eventtypes are various teams/groups/etc. that own various hosts. The purpose of them is so that users can more easily find data owners/subject matter experts. <br/>
+          ◦ The reason for using eventtypes is so that it can be a search string when there are multiple hosts belonging to one group. If there is only one host, it can be defined in tags.conf<br/>
+          ◦ There is an example in eventtypes.conf of the format.<br/>
+        <br/>
+
+        <b>#####TAGS#####</b>
+        <br/>
+        <b>default/tags.conf</b><br/>
+          ◦ This is not needed for the functionality of the dashboards, however it can be helpful when searching data.<br/>
+          ◦ These tags include the data owner department and email addresses for the various hosts identified in eventtypes.conf<br/>
+          ◦ As stated in the eventtypes.conf section, if there is only one host and eventtypes aren't needed, it can all be defined solely in tags.conf<br/>
+          ◦ There are examples of both formats in tags.conf<br/>
+        <br/>
+
+        What else to know?
+        <br/>
+        <b>#####SAVED SEARCHES#####</b>
+        <br/>
+        <b>default/savedsearches.conf</b><br/>
+          <b>index_information</b><br/>
+            ◦ This saved search creates a lookup called index_information.csv<br/>
+            ◦ You may need to edit the search to include/exclude specific splunk_servers as necessary, to fit your environments needs<br/>
+            ◦ This lookup is used in the Index Overview dashboard<br/>
+            ◦ This search is scheduled to run once a day
+      </html>
+    </panel>
+  </row>
+</dashboard>

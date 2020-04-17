@@ -1,0 +1,16 @@
+index,index_description
+_audit,Mostly information about user activity
+_internal,"Many logs from scripted inputs, license usage, metrics, etc."
+_introspection,Data about disk objects and resource usage
+_telemetry,Data about license usage summary
+_thefishbucket,Checkpoint information for indexes
+cim_modactions,Adaptive response action events (from ES)
+endpoint_summary,Summary index for Endpoint searches (from ES)
+itsi_grouped_alerts,Active episode data
+itsi_notable_archive,Episode metadata after close
+itsi_notable_audit,Audit events for episodes
+itsi_summary,Summary index for ITSI searches
+itsi_tracked_alerts,Active raw notable event data
+lastchanceindex,Homeless data
+notable,Summary index created from notable events (from ES)
+threat_activity,Summary index with threat matches (from ES)

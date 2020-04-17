@@ -1,0 +1,56 @@
+<form>
+  <label>Index Overview</label>
+  <description>Info about indexes such as roles, sourcetypes, eventcount, etc.</description>
+  <fieldset submitButton="false"></fieldset>
+  <row>
+    <panel>
+      <title>Roles Allowed to Search Each Index</title>
+      <input type="text" token="keyword">
+        <label>Keyword Search</label>
+        <default>*</default>
+      </input>
+      <table>
+        <title>index_information</title>
+        <search>
+          <query>|inputlookup index_information.csv|search index="*$keyword$*" OR description="*$keyword$*" OR role="*$keyword$*"|table index description role</query>
+        </search>
+        <option name="count">25</option>
+        <option name="drilldown">cell</option>
+        <drilldown>
+          <set token="index_info">$row.index$</set>
+          <set token="role_info">$row.role$</set>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row depends="$index_info$">
+    <panel>
+      <table>
+        <title>Index Information: $index_info$</title>
+        <search>
+          <query>| metadata index=$index_info$ type=sourcetypes|convert ctime(firstTime) ctime(lastTime) ctime(recentTime)|table sourcetype firstTime lastTime recentTime totalCount</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row depends="$index_info$">
+    <panel>
+      <table>
+        <title>Index Information: $index_info$</title>
+        <search>
+          <query>| metadata index=$index_info$ type=hosts|convert ctime(firstTime) ctime(lastTime) ctime(recentTime)|table host firstTime lastTime recentTime totalCount</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>
